@@ -239,6 +239,60 @@
             box-shadow: 6px 6px 0px var(--dark);
     }
 
+        /* BRUTALISTISCHE CHECKBOX FÜR DIE ÜBERNACHTUNG */
+        .neo-checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #ffffff;
+            border: var(--border-style);
+            padding: 15px;
+            box-shadow: var(--neo-shadow-sm);
+            margin-bottom: 25px;
+            cursor: pointer;
+            text-align: left;
+            transition: transform 0.15s ease;
+        }
+
+        .neo-checkbox-container:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark);
+        }
+
+        .neo-checkbox-container input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            appearance: none;
+            -webkit-appearance: none;
+            border: var(--border-style);
+            background: #fff;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .neo-checkbox-container input[type="checkbox"]:checked {
+            background: var(--accent);
+        }
+
+        .neo-checkbox-container input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            color: var(--dark);
+            font-size: 18px;
+            font-weight: 900;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .neo-checkbox-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
         /* KONFETTI CANVAS */
         #confetti-canvas {
             position: fixed;
@@ -318,6 +372,11 @@
 
                         <input type="text" name="Name" placeholder="Wie heißt du?" required class="neo-input">
 
+                        <div class="neo-checkbox-container" onclick="toggleCheckbox(event)">
+                            <input type="checkbox" id="overnight" name="Braucht Schlafplatz?" value="Ja, ich schlafe da! 🛌">
+                            <label for="overnight" class="neo-checkbox-label">Ich brauche danach einen Platz für meine Isomatte/Schlafsack 🛌</label>
+                        </div>
+
                         <div class="btn-group">
                             <button type="button" class="btn btn-yes" onclick="submitRSVP('Zusage 🎉')">Ich bin dabei! 🎉</button>
                             <button type="button" class="btn btn-no" onclick="submitRSVP('Absage 😢')">Kann leider nicht 😢</button>
@@ -386,6 +445,7 @@
 
         function submitRSVP(status) {
             const nameInput = document.querySelector('.neo-input');
+            const overnightCheckbox = document.getElementById('overnight');
     
             // Validierung: Hat der Gast einen Namen eingegeben?
             if (!nameInput.value.trim()) {
@@ -400,10 +460,18 @@
 
             if (status === 'Zusage 🎉') {
                 triggerConfetti();
-                alert("Mega! Deine Zusage wird abgeschickt. Mach dich bereit für die Party! 🥳🔥");
-                // Kurze Verzögerung für den Konfetti-Effekt vor dem Absenden
+                
+                // Netter Text-Hinweis je nachdem, ob mit oder ohne Übernachtung
+                if (overnightCheckbox.checked) {
+                    alert("Mega! Du bist dabei und der Schlafplatz ist für dich reserviert. 🥳🛌");
+                } else {
+                    alert("Klasse! Deine Zusage wird abgeschickt. Get ready for the party of the century! 🥳🔥");
+                }
+                
                 setTimeout(() => { form.submit(); }, 1500);
             } else {
+                // Bei einer Absage setzt man den Schlafplatz-Wert zurück, falls aus Versehen angeklickt
+                overnightCheckbox.checked = false;
                 alert("Schade, dass du nicht kommen kannst! Deine Absage wird übertragen.");
                 form.submit();
             }
