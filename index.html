@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endlich 18! – Du bist eingeladen 🎉</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS VARIABLEN FÜR EIN KONSISTENTES FARBTHEME */
+        :root {
+            --bg-color: #f4edd2;       /* Warmes Retro-Creme */
+            --primary: #ff3366;        /* Knalliges Neon-Pink */
+            --secondary: #3355ff;      /* Elektrisches Blau */
+            --accent: #00ffcc;         /* Frisches Mint/Teal */
+            --dark: #1a1a1a;           /* Hartes Kontrast-Schwarz */
+            --border-style: 4px solid var(--dark);
+            --neo-shadow: 8px 8px 0px var(--dark);
+            --neo-shadow-sm: 4px 4px 0px var(--dark);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            background-image: radial-gradient(var(--dark) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* CONTAINER MIT ASYMMETRISCHEM LAYOUT */
+        .invitation-container {
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* HAUPTKARTE */
+        .card {
+            background: #ffffff;
+            border: var(--border-style);
+            padding: 40px 30px;
+            border-radius: 0px; /* Brutalistischer Verzicht auf Rundungen */
+            box-shadow: var(--neo-shadow);
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .card:hover {
+            transform: rotate(0deg) scale(1.01);
+        }
+
+        /* VERSPIELTE STICKER / OVERLAPS */
+        .badge-18 {
+            position: absolute;
+            top: -30px;
+            right: -20px;
+            background: var(--accent);
+            border: var(--border-style);
+            padding: 10px 20px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            transform: rotate(12deg);
+            box-shadow: var(--neo-shadow-sm);
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .badge-18:hover {
+            transform: rotate(-5deg) scale(1.1);
+        }
+
+        .badge-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            border: var(--border-style);
+            padding: 5px 12px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.8rem;
+            transform: rotate(-3deg);
+            margin-bottom: 20px;
+        }
+
+        /* TYPOGRAFIE */
+        h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            word-wrap: break-word;
+        }
+
+        h1 span {
+            background: var(--primary);
+            color: white;
+            padding: 0 5px;
+            display: inline-block;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* EVENT DETAILS */
+        .details-grid {
+            border-top: var(--border-style);
+            border-bottom: var(--border-style);
+            padding: 20px 0;
+            margin-bottom: 35px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-color);
+            border: 2px solid var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .detail-info strong {
+            display: block;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        /* INTERAKTIVE BUTTONS */
+        .rsvp-section {
+            text-align: center;
+        }
+
+        .rsvp-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 15px 25px;
+            border: var(--border-style);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .btn-yes {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--neo-shadow-sm);
+        }
+
+        .btn-yes:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark);
+        }
+
+        .btn-yes:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--dark);
+        }
+
+        .btn-no {
+            background: #fff;
+            color: var(--dark);
+            box-shadow: var(--neo-shadow-sm);
+        }
+
+        .btn-no:hover {
+            background: #eee;
+        }
+        
+        /* BRUTALISTISCHES EINGABEFELD */
+        .neo-input {
+            width: 100%;
+            padding: 15px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border: var(--border-style);
+            box-shadow: var(--neo-shadow-sm);
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.15s ease;
+        }
+
+        .neo-input:focus {
+            background: var(--accent);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark);
+    }
+
+        /* KONFETTI CANVAS */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* STAGGERED REVEAL ANIMATIONS */
+        @keyframes popIn {
+            0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+        }
+
+        /* RESPONSIVE ANPASSUNGEN */
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .badge-18 { right: -5px; top: -35px; font-size: 1.4rem; }
+            .card { padding: 30px 20px; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="invitation-container">
+        <div class="badge-18" onclick="triggerConfetti()">18!</div>
+
+        <div class="card">
+            <div class="badge-tag">Endlich erwachsen... oder so</div>
+            
+            <h1>Level 18 <br><span>Unlocked!</span></h1>
+            
+            <p class="intro-text">
+                Man wird nur einmal 18! Weil gedruckte Karten mein Budget gesprengt hätten (und wir schließlich im 21. Jahrhundert leben), gibt es das Ganze hier digital, bunt und mit extra viel Vorfreude. Ich lade dich herzlich zu meiner Geburtstagsparty ein! Bring gute Laune und Durst mit.
+            </p>
+
+            <div class="details-grid">
+                <div class="detail-row">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-info">
+                        <strong>Wann?</strong>
+                        Freitag, 05. Juni 2026 ab 20:00 Uhr
+                    </div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-icon">📍</div>
+                    <div class="detail-info">
+                        <strong>Wo?</strong>
+                        Feiningerstraße 9, 90455 Nürnberg
+                    </div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-icon">🍾</div>
+                    <div class="detail-info">
+                        <strong>Specials</strong>
+                        Welcome-Drinks, Snacks & Limousine
+                    </div>
+                </div>
+            </div>
+
+                <div class="rsvp-section">
+                    <p class="rsvp-title">Gib mir bitte bis zum 03.06. Bescheid:</p>
+    
+                    <form action="https://formsubmit.co/bastiperry3@gmail.com" method="POST" id="rsvp-form">
+        
+                        <input type="hidden" name="_subject" value="🎉 Neue Antwort für deine 18. Geburtstagsparty!">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="Antwort" id="rsvp-answer" value="Keine Angabe">
+
+                        <input type="text" name="Name" placeholder="Wie heißt du?" required class="neo-input">
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-yes" onclick="submitRSVP('Zusage 🎉')">Ich bin dabei! 🎉</button>
+                            <button type="button" class="btn btn-no" onclick="submitRSVP('Absage 😢')">Kann leider nicht 😢</button>
+                        </div>
+                    </form>
+                </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Kleines, feines Custom-Konfetti-Skript ohne externe Abhängigkeiten
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function triggerConfetti() {
+            const colors = ['#ff3366', '#3355ff', '#00ffcc', '#ffcc00'];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedX: (Math.random() - 0.5) * 15,
+                    speedY: (Math.random() - 0.5) * 15 - 5,
+                    gravity: 0.3,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 10
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach((p, index) => {
+                p.speedY += p.gravity;
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.rotation += p.rotationSpeed;
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                ctx.restore();
+
+                // Entferne Partikel außerhalb des Bildschirms
+                if (p.y > canvas.height) particles.splice(index, 1);
+            });
+
+            if (particles.length > 0) {
+                requestAnimationFrame(animateConfetti);
+            }
+        }
+
+        function submitRSVP(status) {
+            const nameInput = document.querySelector('.neo-input');
+    
+            // Validierung: Hat der Gast einen Namen eingegeben?
+            if (!nameInput.value.trim()) {
+                alert("Bitte trag kurz deinen Namen ein, damit ich weiß, wer du bist! 😉");
+                nameInput.focus();
+                return;
+            }
+
+            // Antwort im versteckten Feld speichern
+            document.getElementById('rsvp-answer').value = status;
+            const form = document.getElementById('rsvp-form');
+
+            if (status === 'Zusage 🎉') {
+                triggerConfetti();
+                alert("Mega! Deine Zusage wird abgeschickt. Mach dich bereit für die Party! 🥳🔥");
+                // Kurze Verzögerung für den Konfetti-Effekt vor dem Absenden
+                setTimeout(() => { form.submit(); }, 1500);
+            } else {
+                alert("Schade, dass du nicht kommen kannst! Deine Absage wird übertragen.");
+                form.submit();
+            }
+        }
+    </script>
+</body>
+</html>
